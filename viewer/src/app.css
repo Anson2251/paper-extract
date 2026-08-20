@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* A bit of extra breathing room for KaTeX inside paragraphs. */
+.prose-math {
+  line-height: 1.6;
+}

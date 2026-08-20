@@ -1,0 +1,29 @@
+{
+  "name": "paper-viewer",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Svelte + Tailwind + Flowbite viewer for paper bundles (paper.json + imgs/)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "flowbite": "^2.5.2",
+    "flowbite-svelte": "^0.46.23",
+    "jszip": "^3.10.1",
+    "katex": "^0.16.47",
+    "marked": "^12.0.2"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.0",
+    "autoprefixer": "^10.5.4",
+    "flowbite-svelte-icons": "^3.1.0",
+    "postcss": "^8.5.26",
+    "svelte": "^5.56.10",
+    "tailwindcss": "^3.4.19",
+    "vite": "^8.2.2"
+  }
+}

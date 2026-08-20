@@ -1,0 +1,21 @@
+[project]
+name = "paper-extract"
+version = "0.1.0"
+description = "Pipeline for turning exam paper PDFs into clean per-question JSON"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx[socks]>=0.28.1",
+    "litellm>=1.97.0",
+    "mineru-open-sdk>=0.2.5",
+    "pillow>=10.0.0",
+    "pymupdf>=1.23.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

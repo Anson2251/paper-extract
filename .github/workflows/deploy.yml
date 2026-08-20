@@ -1,0 +1,57 @@
+name: Deploy paper viewer to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    # Only rebuild/deploy when the viewer (or this workflow) changes.
+    paths:
+      - 'viewer/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+# Give the deploy job write access to push the gh-pages branch.
+permissions:
+  contents: write
+
+concurrency:
+  # Don't let a newer deploy overlap/outrun an in-flight one.
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          # Match the pnpm version used to generate viewer/pnpm-lock.yaml.
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: viewer/pnpm-lock.yaml
+
+      - name: Install dependencies
+        working-directory: viewer
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        working-directory: viewer
+        run: pnpm build
+
+      - name: Deploy to GitHub Pages (gh-pages branch)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # The built SPA lives here; the action publishes it to gh-pages.
+          publish_dir: viewer/dist
+          publish_branch: gh-pages
+          # Keep history so rollbacks are easy; set false for a lean, force-flat branch.
+          force_orphan: false
